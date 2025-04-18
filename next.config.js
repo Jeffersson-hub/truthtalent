@@ -1,5 +1,5 @@
 module.exports = {
-  async redirects() {
+  /* async redirects() {
     return [
       {
         source: '/',
@@ -7,13 +7,5 @@ module.exports = {
         permanent: true,
       },
     ];
-  },
+  }, */
 }
-/**
-// next.config.js
-const nextConfig = {
-  reactStrictMode: true,
-};
-
-module.exports = nextConfig;
-*/
