@@ -195,9 +195,6 @@
       "dynamicIO": false,
       "inlineCss": false,
       "useCache": false,
-      "allowedDevOrigins": [
-        "http://192.168.1.246:3000"
-      ],
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -283,7 +280,14 @@
     "configFileName": "next.config.js",
     "turbopack": {
       "root": "/home/jeff/Projets/_TruthTalent/truthtalent"
-    }
+    },
+    "_originalRedirects": [
+      {
+        "source": "/",
+        "destination": "/dashboard",
+        "permanent": true
+      }
+    ]
   },
   "appDir": "/home/jeff/Projets/_TruthTalent/truthtalent",
   "relativeAppDir": "",
