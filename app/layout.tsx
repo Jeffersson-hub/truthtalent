@@ -1,34 +1,25 @@
 // app/layout.tsx
-import "./globals.css"; // si tu as un fichier de styles globaux
+import "./globals.css"; // fichier de styles globaux
 import { ReactNode } from "react";
-import './globals.css';
+import { Metadata } from 'next';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="fr">
-      <head>
-        <title>Votre Application de Recrutement</title>
-      </head>
-      <body>{children}</body>
-    </html>
-  );
-}
-
-export const metadata = {
+export const metadata: Metadata = {
   title: "TruthTalent",
   description: "Plateforme de recrutement basée sur les compétences",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <html lang="fr">
-      <body>
-        {children}
-      </body>
+      <head>
+        <title>{metadata.title}</title> {/* Utilisation du titre défini dans metadata */}
+        <meta name="description" content={metadata.description} /> {/* Utilisation de la description */}
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
