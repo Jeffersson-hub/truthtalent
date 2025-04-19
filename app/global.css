@@ -1,0 +1,91 @@
+/* globals.css */
+
+/* Import des polices (vous pouvez ajouter vos propres imports ici) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Réinitialisation des styles pour une meilleure cohérence entre les navigateurs */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f4f6f8; /* Couleur de fond générale */
+  color: #333; /* Couleur de texte par défaut */
+}
+
+/* Typographie de base */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: #007bff; /* Couleur des liens */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Mise en page de base (vous pouvez étendre ceci avec des classes plus spécifiques) */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Styles pour les formulaires (à adapter selon vos besoins) */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+button {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Vous pouvez ajouter d'autres styles globaux ici, comme pour la navigation, les cartes, etc. */
