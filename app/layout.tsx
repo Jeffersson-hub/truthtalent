@@ -1,6 +1,22 @@
 // app/layout.tsx
 import "./globals.css"; // si tu as un fichier de styles globaux
 import { ReactNode } from "react";
+import './globals.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="fr">
+      <head>
+        <title>Votre Application de Recrutement</title>
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
 
 export const metadata = {
   title: "TruthTalent",
