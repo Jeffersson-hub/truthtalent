@@ -14,10 +14,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <head>
-        <title>{metadata.title as string}</title> {/* Cast as string */}
-        <meta name="description" content={metadata.description as string} /> {/* Cast as string */}
-      </head>
       <body>{children}</body>
     </html>
   );
