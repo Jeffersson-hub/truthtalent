@@ -1,0 +1,17 @@
+Email RH - Nouvelle candidature détectée
+
+Objet : Nouvelle candidature pour [Intitulé du poste]
+
+Bonjour [Nom du recruteur],
+
+Une nouvelle candidature a été reçue pour le poste de [Intitulé du poste].
+
+Profil du candidat :
+- Nom : [Nom]
+- Compétences clés : [Compétences détectées]
+- Expérience : [Expérience]
+
+Accéder à la fiche complète : [Lien vers dashboard RH]
+
+Cordialement,  
+Votre assistant automatisé
