@@ -6,15 +6,15 @@ export default function Home() {
       </header>
 
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <section className="bg-white p-6 rounded shadow">
+        <section className="bg-blue p-6 rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Candidatures</h2>
           <p>Voir et gérer les candidatures reçues</p>
         </section>
-        <section className="bg-white p-6 rounded shadow">
+        <section className="bg-green p-6 rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Offres d&apos;emploi</h2>
           <p>Créer ou modifier les annonces de recrutement</p>
         </section>
-        <section className="bg-white p-6 rounded shadow">
+        <section className="bg-pink p-6 rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Analytique</h2>
           <p>Suivi des performances de recrutement</p>
         </section>
