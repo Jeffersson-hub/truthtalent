@@ -11,7 +11,7 @@ export default function Home() {
           <p>Voir et gérer les candidatures reçues</p>
         </section>
         <section className="bg-white p-6 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2">Offres d'emploi</h2>
+          <h2 className="text-xl font-semibold mb-2">Offres d&apos;emploi</h2>
           <p>Créer ou modifier les annonces de recrutement</p>
         </section>
         <section className="bg-white p-6 rounded shadow">
