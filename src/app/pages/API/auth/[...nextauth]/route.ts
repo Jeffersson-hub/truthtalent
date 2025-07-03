@@ -1,19 +1,18 @@
 import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github"; // ou tout autre provider
+import GitHubProvider from "next-auth/providers/github"; // ou ton provider préféré
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
-  callbacks: {
-    async session({ session, token }) {
-      session.user.id = token.sub;
-      return session;
-    },
+  pages: {
+    signIn: '/login', // facultatif si tu veux une page dédiée
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

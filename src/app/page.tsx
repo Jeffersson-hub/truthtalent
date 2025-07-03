@@ -1,3 +1,33 @@
+'use client';
+
+import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
+// ✅ Composant bouton candidature
+function CandidatureButton() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (status === 'unauthenticated') {
+      signIn(); // déclenche la popin NextAuth
+    } else {
+      router.push('/candidatures'); // redirige vers la page de gestion des CVs
+    }
+  };
+
+  return (
+    <section
+      onClick={handleClick}
+      className="cursor-pointer bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:bg-blue-600 transition"
+    >
+      <h2 className="text-xl font-semibold mb-2">Candidatures</h2>
+      <p>Voir et gérer les candidatures reçues</p>
+    </section>
+  );
+}
+
+// ✅ Composant principal exporté
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -8,10 +38,7 @@ export default function Home() {
       </header>
 
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <section className="bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:bg-blue-600 transition">
-          <h2 className="text-xl font-semibold mb-2">Candidatures</h2>
-          <p>Voir et gérer les candidatures reçues</p>
-        </section>
+        <CandidatureButton />
 
         <section className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:bg-green-600 transition">
           <h2 className="text-xl font-semibold mb-2">Offres d&apos;emploi</h2>
