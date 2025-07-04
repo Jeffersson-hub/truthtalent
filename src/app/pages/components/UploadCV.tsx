@@ -1,26 +1,41 @@
 'use client';
 
-import { useState } from "react";
+import { UploadButton } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import "@uploadthing/react/styles.css";
+import { UploadCV } from '@/components/UploadCV';
+
 
 export default function UploadCV() {
-  const [files, setFiles] = useState<File[]>([]);
+  const handleUploadComplete = async (res: any) => {
+    const file = res[0];
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(prev => [...prev, ...selectedFiles]);
+    // Appeler ton API pour envoyer à Airtable
+    const response = await fetch("/api/upload-to-airtable", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        filename: file.name,
+        url: file.url,
+      }),
+    });
 
-    // ⬇️ Ici tu peux envoyer vers ton API de parsing CV
+    const data = await response.json();
+    if (data.success) {
+      alert("CV envoyé à Airtable ✅");
+    } else {
+      alert("Erreur lors de l'envoi vers Airtable ❌");
+    }
   };
 
   return (
-    <div className="border border-dashed border-gray-400 p-6 rounded-lg">
-      <input type="file" multiple accept=".pdf,.doc,.docx" onChange={handleUpload} />
-      <ul className="mt-4">
-        {files.map((file, i) => (
-          <li key={i}>{file.name}</li>
-        ))}
-      </ul>
+    <div className="p-4 border rounded-xl bg-white shadow max-w-md mx-auto mt-8">
+      <h2 className="text-xl font-bold mb-4">Uploader un CV</h2>
+      <UploadButton<OurFileRouter>
+        endpoint="cvUploader"
+        onClientUploadComplete={handleUploadComplete}
+        onUploadError={(error) => alert(`Erreur d'upload: ${error.message}`)}
+      />
     </div>
   );
 }

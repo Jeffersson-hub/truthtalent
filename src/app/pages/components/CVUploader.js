@@ -1,30 +1,42 @@
-// components/CVUploader.js
+'use client';
+
 import { useState } from 'react';
 
-export default function CVUploader() {
-  const [file, setFile] = useState(null);
-  const [status, setStatus] = useState('');
+export default function UploadCV() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files;
+    if (!selected || selected.length === 0) return;
+
+    const file = selected[0]; // on prend 1 fichier pour simplifier
     const formData = new FormData();
-    formData.append('cv', file);
+    formData.append('file', file);
 
-    const res = await fetch('/api/upload', {
+    setUploading(true);
+    setMessage('');
+
+    const res = await fetch('/api/upload-cv', {
       method: 'POST',
       body: formData,
     });
 
-    const result = await res.json();
-    setStatus(result.message);
+    if (res.ok) {
+      setMessage('CV envoyé et stocké dans Airtable ✅');
+    } else {
+      setMessage('Erreur lors de l’envoi ❌');
+    }
+
+    setUploading(false);
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <input type="file" onChange={e => setFile(e.target.files[0])} />
-      <button onClick={handleUpload} className="ml-2 bg-blue-600 text-white px-4 py-1 rounded">
-        Upload
-      </button>
-      {status && <p className="mt-2 text-sm text-gray-700">{status}</p>}
+    <div className="p-4 border rounded-xl bg-white shadow">
+      <h2 className="text-xl font-bold mb-4">Uploader un CV</h2>
+      <input type="file" accept=".pdf,.doc,.docx" onChange={handleUpload} />
+      <p className="mt-4 text-sm text-gray-600">{uploading ? 'Envoi...' : message}</p>
     </div>
   );
 }

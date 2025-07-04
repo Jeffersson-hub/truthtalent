@@ -1,55 +1,25 @@
 'use client';
 
-import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-// ✅ Composant bouton candidature
-function CandidatureButton() {
-  const { data: session, status } = useSession();
+export default function Home() {
   const router = useRouter();
 
   const handleClick = () => {
-    if (status === 'unauthenticated') {
-      signIn(); // déclenche la popin NextAuth
-    } else {
-      router.push('/candidatures'); // redirige vers la page de gestion des CVs
-    }
+    router.push('/candidatures');
   };
 
   return (
-    <section
-      onClick={handleClick}
-      className="cursor-pointer bg-blue-500 text-white p-6 rounded-2xl shadow-lg hover:bg-blue-600 transition"
-    >
-      <h2 className="text-xl font-semibold mb-2">Candidatures</h2>
-      <p>Voir et gérer les candidatures reçues</p>
-    </section>
-  );
-}
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <h1 className="text-3xl font-bold mb-4">Bienvenue sur TruthTalent</h1>
+      <p className="text-lg mb-6">Cliquez sur le bouton ci-dessous pour importer des CV</p>
 
-// ✅ Composant principal exporté
-export default function Home() {
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <header className="mb-10">
-        <h1 className="text-3xl font-bold text-center text-gray-800">
-          TruthTalent – Dashboard Recrutement
-        </h1>
-      </header>
-
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <CandidatureButton />
-
-        <section className="bg-green-500 text-white p-6 rounded-2xl shadow-lg hover:bg-green-600 transition">
-          <h2 className="text-xl font-semibold mb-2">Offres d&apos;emploi</h2>
-          <p>Créer ou modifier les annonces de recrutement</p>
-        </section>
-
-        <section className="bg-pink-500 text-white p-6 rounded-2xl shadow-lg hover:bg-pink-600 transition">
-          <h2 className="text-xl font-semibold mb-2">Analytique</h2>
-          <p>Suivi des performances de recrutement</p>
-        </section>
-      </main>
-    </div>
+      <button
+        onClick={handleClick}
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-lg shadow"
+      >
+        Candidats
+      </button>
+    </main>
   );
 }
