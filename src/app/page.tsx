@@ -6,7 +6,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/candidatures');
+    router.push('/candidates');
   };
 
   return (
@@ -18,7 +18,7 @@ export default function Home() {
         onClick={handleClick}
         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-lg shadow"
       >
-        Candidats
+        Candidates
       </button>
     </main>
   );
