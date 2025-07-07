@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import React from 'react';
+
 
 export default function UploadCV() {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -40,3 +42,5 @@ export default function UploadCV() {
     </div>
   );
 }
+
+const [files, setFiles] = useState<File[]>([]);
