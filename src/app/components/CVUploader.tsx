@@ -42,5 +42,3 @@ export default function UploadCV() {
     </div>
   );
 }
-
-const [files, setFiles] = useState<File[]>([]);
