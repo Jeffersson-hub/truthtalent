@@ -1,22 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import Airtable from "airtable";
 
+// Connexion Airtable
 const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
   process.env.AIRTABLE_BASE_ID!
 );
 
-const table = base(process.env.AIRTABLE_TABLE_ID!);
+const table = base(process.env.AIRTABLE_TABLE_ID!); // ✅ On réutilise cette constante
 
+// API POST
 export async function POST(req: NextRequest) {
   const { filename, url } = await req.json();
 
   try {
-    await base("candidates").create([
+    await table.create([
       {
         fields: {
           Nom: filename,
           date: new Date().toISOString(),
-          resume: [{ url }],
+          resume: [
+            {
+              url, // ✅ tableau d'objet requis pour un champ "Pièce jointe"
+            },
+          ],
         },
       },
     ]);
@@ -24,6 +30,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Airtable error:", err);
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false, error: (err as Error).message });
   }
 }
