@@ -17,12 +17,13 @@ export async function POST(req: NextRequest) {
       {
         fields: {
           Nom: filename,
-          date: new Date().toISOString(),
           resume: [
             {
-              url, // ✅ tableau d'objet requis pour un champ "Pièce jointe"
+              url: resumeUrl,
+              filename: filename,
+              type: "application/pdf", // ou "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             },
-          ],
+          ] as Airtable.Attachment[],
         },
       },
     ]);
