@@ -1,13 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { UploadDropzone } from '@uploadthing/react';
-// import { ourFileRouter } from '@/app/api/uploadthing/core';
+import { UploadDropzone } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core"; // 👈 importe bien le type
 
 export default function UploadCV() {
   const [message, setMessage] = useState('');
 
-  // ✅ Typage correct de `res` en fonction de la structure renvoyée par UploadThing
   const handleUploadComplete = async (
     res: { url: string; name: string }[] | undefined
   ) => {
@@ -21,21 +20,15 @@ export default function UploadCV() {
     const filename = file.name;
 
     try {
-      const response = await fetch('/api/candidates', {
+      const response = await fetch('/api/upload-to-airtable', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ filename, fileUrl }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, url: fileUrl }),
       });
 
-      if (response.ok) {
-        setMessage('✅ CV uploadé et stocké dans Airtable');
-      } else {
-        setMessage('❌ Erreur lors de l’envoi à Airtable');
-      }
-    } catch (error) {
-      console.error('Erreur fetch :', error);
+      setMessage(response.ok ? '✅ CV envoyé à Airtable' : '❌ Échec Airtable');
+    } catch (err) {
+      console.error(err);
       setMessage('❌ Erreur réseau');
     }
   };
@@ -44,7 +37,7 @@ export default function UploadCV() {
     <div className="p-4 border rounded-xl bg-white shadow">
       <h2 className="text-xl font-bold mb-4">Uploader un CV</h2>
 
-      <UploadDropzone
+      <UploadDropzone<OurFileRouter> // ✅ Ici on passe le type générique
         endpoint="cvUploader"
         onClientUploadComplete={handleUploadComplete}
         onUploadError={() => setMessage('❌ Erreur UploadThing')}
