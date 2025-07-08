@@ -10,7 +10,8 @@ const table = base(process.env.AIRTABLE_TABLE_ID!); // ✅ On réutilise cette c
 
 // API POST
 export async function POST(req: NextRequest) {
-  const { filename, url } = await req.json();
+  // const { filename, url } = await req.json();
+  const { filename } = await req.json();
 
   try {
     await table.create([
