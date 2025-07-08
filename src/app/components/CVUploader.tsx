@@ -1,11 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import React from 'react';
-
+import React, { useState } from 'react';
 
 export default function UploadCV() {
-  const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -13,7 +10,7 @@ export default function UploadCV() {
     const selected = e.target.files;
     if (!selected || selected.length === 0) return;
 
-    const file = selected[0]; // on prend 1 fichier pour simplifier
+    const file = selected[0]; // un seul fichier
     const formData = new FormData();
     formData.append('file', file);
 

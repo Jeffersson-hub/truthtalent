@@ -1,19 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true, // ✅ si tu utilises les server actions (Next 14+)
-  },
   eslint: {
-    ignoreDuringBuilds: true, // ✅ évite que les erreurs ESLint bloquent Vercel
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true, // ❗️optionnel — utile en test ou si tu veux bypass TypeScript au build
+    ignoreBuildErrors: true,
   },
 };
+
+module.exports = nextConfig;
+
 
 export default nextConfig;
 module.exports = {
   env: {
-    AIRTABLE_API_KEY: process.env.AIRTABLE_API_KEY,
-  },
+        AIRTABLE_API_KEY: process.env.AIRTABLE_API_KEY,
+        AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID,
+        AIRTABLE_TABLE_NAME: process.env.AIRTABLE_TABLE_NAME,
+    },
+
+    reactStrictMode: true,
 };
