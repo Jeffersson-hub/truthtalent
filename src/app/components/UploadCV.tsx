@@ -29,4 +29,13 @@ export default function UploadCV() {
             }),
           });
 
-          alert("
+          alert("✅ CV envoyé à Airtable !");
+        }}
+        onUploadError={(error) => {
+          console.error("Erreur UploadThing :", error.message);
+          alert("❌ Erreur UploadThing");
+        }}
+      />
+    </div>
+  );
+}
