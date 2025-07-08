@@ -9,30 +9,31 @@ export default function UploadCV() {
     <div className="p-8">
       <h2 className="text-xl font-bold mb-4">📄 Upload CV</h2>
 
-      <UploadButton<OurFileRouter>
+      <UploadButton<OurFileRouter, "cvUploader">
         endpoint="cvUploader"
         onClientUploadComplete={async (res) => {
           const url = res?.[0]?.uploadedUrl;
+          const name = res?.[0]?.name;
 
           if (!url) {
             alert("Erreur : URL manquante");
             return;
           }
 
-          await fetch("/api/candidates", {
+          await fetch("/api/upload-to-airtable", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              filename: "nom-du-fichier.pdf", // tu peux récupérer le vrai nom ici
+              filename: name ?? "cv inconnu",
               url,
             }),
           });
 
-          alert("CV envoyé !");
+          alert("✅ CV envoyé à Airtable !");
         }}
         onUploadError={(error) => {
           console.error("Erreur UploadThing :", error.message);
-          alert("Erreur UploadThing");
+          alert("❌ Erreur UploadThing");
         }}
       />
     </div>
