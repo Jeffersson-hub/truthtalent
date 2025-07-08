@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import Airtable from "airtable";
 
 // Connexion Airtable
-const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
+const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN! }).base(
   process.env.AIRTABLE_BASE_ID!
 );
 
-const table = base(process.env.AIRTABLE_TABLE_ID!); // ✅ On réutilise cette constante
+const table = base(process.env.AIRTABLE_TABLE_ID!);
 
 // API POST
 export async function POST(req: NextRequest) {
@@ -20,9 +20,11 @@ export async function POST(req: NextRequest) {
           date: new Date().toISOString(),
           resume: [
             {
-              url, // ✅ tableau d'objet requis pour un champ "Pièce jointe"
+              url,
+              filename,
+              type: "application/pdf", // tu peux détecter dynamiquement si besoin
             },
-          ],
+          ] as Airtable.Attachment[],
         },
       },
     ]);
