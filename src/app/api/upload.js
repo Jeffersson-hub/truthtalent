@@ -1,6 +1,6 @@
 // pages/api/upload.js
 import formidable from 'formidable';
-import fs from 'fs';
+// import fs from 'fs';
 
 // Désactive le body parser de Next.js pour gérer le fichier manuellement
 export const config = {
