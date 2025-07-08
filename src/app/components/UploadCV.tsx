@@ -12,7 +12,7 @@ export default function UploadCV() {
       <UploadButton<OurFileRouter, "cvUploader">
         endpoint="cvUploader"
         onClientUploadComplete={async (res) => {
-          const url = res?.[0]?.uploadedUrl;
+          const url = res?.[0]?.url; // ✅ Remplace uploadedUrl par url
           const name = res?.[0]?.name;
 
           if (!url) {
@@ -29,13 +29,4 @@ export default function UploadCV() {
             }),
           });
 
-          alert("✅ CV envoyé à Airtable !");
-        }}
-        onUploadError={(error) => {
-          console.error("Erreur UploadThing :", error.message);
-          alert("❌ Erreur UploadThing");
-        }}
-      />
-    </div>
-  );
-}
+          alert("
