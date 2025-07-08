@@ -24,13 +24,13 @@ export default async function handler(req, res) {
     }
 
     // 🔽 Lecture du fichier
-    try {
+    /* try {
       const data = fs.readFileSync(file.filepath);
       // ➕ Traitement du CV ici (ex: stocker, parser, envoyer à Airtable)
       res.status(200).json({ message: 'CV reçu avec succès' });
     } catch (err) {
       console.error('Erreur lecture fichier:', err);
       res.status(500).json({ message: 'Erreur lors de la lecture du fichier' });
-    }
+    } */
   });
 }
