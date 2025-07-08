@@ -34,6 +34,11 @@ export default function UploadCVWithDrop() {
           console.error("Erreur UploadThing :", error.message);
           alert("❌ Erreur UploadThing");
         }}
+        appearance={{
+          button: "ut-button:bg-green-600 ut-button:text-white",
+          label: "text-lg text-gray-700 dark:text-gray-100",
+          container: "max-w-md mx-auto p-6 border border-gray-300 rounded-xl shadow-md bg-white dark:bg-gray-800",
+        }}
       />
     </div>
   );

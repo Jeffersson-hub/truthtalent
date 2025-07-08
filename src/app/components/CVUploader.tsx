@@ -41,6 +41,11 @@ export default function UploadCV() {
         endpoint="cvUploader"
         onClientUploadComplete={handleUploadComplete}
         onUploadError={() => setMessage('❌ Erreur UploadThing')}
+        appearance={{
+        button: "ut-button:bg-green-600 ut-button:text-white",
+        label: "text-lg text-gray-700 dark:text-gray-100",
+        container: "max-w-md mx-auto p-6 border border-gray-300 rounded-xl shadow-md bg-white dark:bg-gray-800",
+      }}
       />
 
       <p className="mt-4 text-sm text-gray-600">{message}</p>

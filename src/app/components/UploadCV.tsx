@@ -35,6 +35,10 @@ export default function UploadCV() {
           console.error("Erreur UploadThing :", error.message);
           alert("❌ Erreur UploadThing");
         }}
+        appearance={{
+          button: "bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition",
+          container: "w-fit mx-auto mt-4", // limite largeur + centrage
+        }}
       />
     </div>
   );

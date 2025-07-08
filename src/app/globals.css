@@ -1,3 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optionnel : style custom */
+body {
+  @apply bg-white text-black dark:bg-gray-900 dark:text-white;
+}
+
 @import "tailwindcss";
 
 :root {
