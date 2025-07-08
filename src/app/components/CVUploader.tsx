@@ -37,7 +37,7 @@ export default function UploadCV() {
     <div className="p-4 border rounded-xl bg-white shadow">
       <h2 className="text-xl font-bold mb-4">Uploader un CV</h2>
 
-      <UploadDropzone<OurFileRouter> // ✅ Ici on passe le type générique
+      <UploadDropzone<OurFileRouter, "cvUploader">
         endpoint="cvUploader"
         onClientUploadComplete={handleUploadComplete}
         onUploadError={() => setMessage('❌ Erreur UploadThing')}
