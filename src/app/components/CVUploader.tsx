@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import { UploadDropzone } from '@uploadthing/react';
-import { ourFileRouter } from '@/app/api/uploadthing/core';
+// import { ourFileRouter } from '@/app/api/uploadthing/core';
 
 export default function UploadCV() {
   const [message, setMessage] = useState('');
 
-  const handleUploadComplete = async (res: any) => {
+  // ✅ Typage correct de `res` en fonction de la structure renvoyée par UploadThing
+  const handleUploadComplete = async (
+    res: { url: string; name: string }[] | undefined
+  ) => {
     if (!res || res.length === 0) {
       setMessage('Aucun fichier reçu');
       return;
