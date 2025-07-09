@@ -1,37 +1,26 @@
-import { NextRequest, NextResponse } from "next/server";
-import Airtable from "airtable";
+import { NextRequest } from "next/server";
+import { base } from "@/lib/airtable";
 
-// Connexion Airtable
-const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN! }).base(
-  process.env.AIRTABLE_BASE_ID!
-);
-
-const table = base(process.env.AIRTABLE_TABLE_ID!);
-
-// API POST
 export async function POST(req: NextRequest) {
-  const { filename, url } = await req.json();
-
   try {
-    await table.create([
+    const { nom, email, competences, resumeUrl, filename } = await req.json();
+
+    await base('Candidats').create([
       {
         fields: {
-          Nom: filename,
+          Nom: nom,
+          Email: email,
+          Compétences: competences,
+          resumeUrl,
+          filename,
           date: new Date().toISOString(),
-          resume: [
-            {
-              url,
-              filename,
-              type: "application/pdf", // tu peux détecter dynamiquement si besoin
-            },
-          ] as Airtable.Attachment[],
         },
       },
     ]);
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("Airtable error:", err);
-    return NextResponse.json({ success: false, error: (err as Error).message });
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (err: any) {
+    console.error("Erreur Airtable :", err);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }

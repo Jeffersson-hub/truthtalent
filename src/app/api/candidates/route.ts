@@ -1,43 +1,44 @@
 import { NextResponse } from 'next/server';
 import Airtable from 'airtable';
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY! }).base(
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   process.env.AIRTABLE_BASE_ID!
 );
 
-// 👉 Type personnalisé pour les données attendues du front
-type IncomingData = {
-  filename: string;
-  fileUrl: string;
-};
-
 export async function POST(req: Request) {
   try {
-    const body: IncomingData = await req.json();
-    const { filename, fileUrl } = body;
+    const data = await req.json();
+    console.log("📥 Données reçues dans l'API :", data);
 
-    if (!filename || !fileUrl) {
-      return NextResponse.json({ error: 'Nom de fichier ou URL manquant' }, { status: 400 });
+    const { nom, email, competences, fichiers } = data;
+
+    if (!fichiers || fichiers.length === 0) {
+      console.error("❌ Aucun fichier reçu");
+      return NextResponse.json({ error: "Aucun fichier fourni" }, { status: 400 });
     }
 
-    await base('Candidats').create([
-      {
-        fields: {
-          Nom: filename,
-          resume: [
-            {
-              url: fileUrl,
-              filename,
-              type: 'application/pdf', // ou adapte dynamiquement si nécessaire
-            },
-          ] as Airtable.Attachment[],
-        },
-      },
+    const recordData = {
+      Nom: nom,
+      Email: email,
+      Compétences: competences,
+      Date: new Date().toISOString(),
+      "piece jointe": fichiers.map((file: any) => ({
+        url: file.url,
+        filename: file.name,
+      })),
+    };
+
+    console.log("📤 Envoi vers Airtable :", recordData);
+
+    const airtableRes = await base(process.env.AIRTABLE_TABLE_ID!).create([
+      { fields: recordData }
     ]);
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error('Erreur ajout Airtable:', err);
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+    console.log("✅ Réponse Airtable :", airtableRes[0].id);
+
+    return NextResponse.json({ success: true, recordId: airtableRes[0].id });
+  } catch (err: any) {
+    console.error("❌ Erreur dans API /candidates :", err);
+    return NextResponse.json({ error: "Erreur API" }, { status: 500 });
   }
 }
