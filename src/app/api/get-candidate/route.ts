@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Airtable from "airtable";
-import ListCandidates from '@app/candidates/list/list';
+// import ListCandidates from '@app/candidates/list/list';
 
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY! }).base(

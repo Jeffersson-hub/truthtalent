@@ -7,7 +7,7 @@ export const ourFileRouter = {
   cvUploader: f({ pdf: { maxFileSize: "4MB" } })
     .onUploadComplete(async ({ file }) => {
       console.log("✅ Fichier reçu :", file);
-      return { uploadedUrl: file.url };
+      return { uploadedUrl: file.ufsUrl };
     }),
 } satisfies FileRouter;
 
