@@ -2,8 +2,9 @@
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}"
   ],
-  darkMode: "class", // ✅ nécessaire pour activer dark mode via classe
+  darkMode: "media", // ou "class" si tu veux forcer le dark mode avec une classe
   theme: {
     extend: {},
   },
