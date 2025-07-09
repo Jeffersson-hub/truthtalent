@@ -1,12 +1,12 @@
 // src/app/api/uploadthing/core.ts
-import { createUploadthing, type FileRouter } from "uploadthing/next"; // ✅
+import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
 export const ourFileRouter = {
   cvUploader: f({ pdf: { maxFileSize: "4MB" } })
     .onUploadComplete(async ({ file }) => {
-      console.log("✅ Fichier reçu :", file.url);
+      console.log("✅ Fichier reçu :", file);
       return { uploadedUrl: file.url };
     }),
 } satisfies FileRouter;
