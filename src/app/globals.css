@@ -1,14 +1,14 @@
-/* src/app/globals.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Couleurs dynamiques avec root */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Mode sombre auto via media query */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -16,9 +16,14 @@
   }
 }
 
+/* Application des couleurs */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Optionnel : utilitaires Tailwind */
+body {
   @apply dark:bg-gray-900 dark:text-white;
 }

@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function UploadCVWithDrop() {
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleUploadComplete = async (
     res: { url: string; name: string }[] | undefined
@@ -18,61 +19,56 @@ export default function UploadCVWithDrop() {
       return;
     }
 
-    const response = await fetch("/api/candidates", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        filename,
-        url: uploadedUrl,
-      }),
-    });
+    setLoading(true);
 
-    if (response.ok) {
-      setMessage("✅ CV envoyé avec succès");
-    } else {
-      setMessage("❌ Erreur lors de l'envoi à Airtable");
+    try {
+      const response = await fetch("/api/airtable-insert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidateName: "Jean Boisgontier",
+          email: "jean@example.com",
+          phone: "0600000000",
+          profilePhoto: "",
+          skills: "React, Node, Python",
+          experiences: "5 ans dev FullStack",
+          softSkills: "Rigoureux, Curieux",
+          resumeUrl: uploadedUrl,
+        }),
+      });
+
+      if (response.ok) {
+        setMessage("✅ Candidat ajouté dans Airtable !");
+      } else {
+        const error = await response.json();
+        setMessage("❌ Erreur Airtable : " + (error?.error || "Erreur inconnue"));
+      }
+    } catch (err: any) {
+      console.error("Erreur API Airtable:", err);
+      setMessage("❌ Exception lors de l'envoi à Airtable");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleUploadError = (err: Error) => {
+    console.error("Erreur UploadThing:", err);
+    setMessage("❌ Erreur UploadThing");
+  };
+
   return (
-    <div className="flex flex-col gap-6 items-center">
-      {/* Zone d'upload avec taille réduite */}
-      <div className="w-full max-w-xs">
-        <UploadDropzone<OurFileRouter, "cvUploader">
-          endpoint="cvUploader"
-          onClientUploadComplete={handleUploadComplete}
-          onUploadError={(error) => {
-            console.error("Erreur UploadThing :", error.message);
-            setMessage("❌ Erreur UploadThing");
-          }}
-          appearance={{
-            container:
-              "border border-gray-300 rounded-xl p-4 bg-white dark:bg-gray-900 shadow",
-            label:
-              "text-sm text-gray-600 dark:text-gray-300 text-center",
-            uploadIcon: {
-              width: "60px",
-              height: "60px",
-            },
-          }}
-        />
-      </div>
+    <div className="bg-white border p-6 rounded-lg shadow-md max-w-xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4 text-center">📤 Déposez votre CV</h2>
 
-      {/* Message */}
-      <p className="text-sm text-gray-700 dark:text-gray-300">{message}</p>
+      <UploadDropzone<OurFileRouter>
+        endpoint="cvUploader"
+        onClientUploadComplete={handleUploadComplete}
+        onUploadError={handleUploadError}
+        className="ut-upload-dropzone w-full ut-button:bg-blue-600 ut-button:ut-readying:bg-blue-400 ut-button:ut-uploading:bg-blue-400"
+      />
 
-      {/* Boutons d'action */}
-      <div className="flex gap-3 mt-4">
-        <button className="bg-white dark:bg-gray-800 text-sm px-4 py-2 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-700 border">
-          📄 Liste CV
-        </button>
-        <button className="bg-white dark:bg-gray-800 text-sm px-4 py-2 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-700 border">
-          📊 Statistiques
-        </button>
-        <button className="bg-white dark:bg-gray-800 text-sm px-4 py-2 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-700 border">
-          ⚙️ Paramètres
-        </button>
-      </div>
+      {loading && <p className="mt-4 text-blue-500 text-sm">Envoi en cours...</p>}
+      {message && <p className="mt-4 text-sm text-center">{message}</p>}
     </div>
   );
 }
