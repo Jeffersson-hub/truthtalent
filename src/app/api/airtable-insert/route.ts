@@ -1,44 +1,39 @@
-// src/app/api/airtable-insert/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import Airtable from "airtable";
 
-Airtable.configure({ apiKey: process.env.AIRTABLE_API_KEY });
-const base = Airtable.base("appwxroq7eFUVsw9D"); // ✅ ID de la base
+// Connexion Airtable
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY! }).base(
+  process.env.AIRTABLE_BASE_ID!
+);
 
+const table = base(process.env.AIRTABLE_TABLE_ID!);
+
+// API POST
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-
-  console.log("📥 Données reçues:", body);
-
   try {
-    const resumeAttachment = body.resumeUrl
-      ? [
-          {
-            url: body.resumeUrl,
-            filename: `cv_${body.candidateName}.pdf`,
-          },
-        ]
-      : [];
+    const body = await req.json(); // 🟢 Ceci doit venir avant tout
 
-    await base("Candidates").create({
-      fields: {
-        "Candidate Name": body.candidateName,
-        "Email Address": body.email,
-        "Phone Number": body.phone,
-        "Profile Photo": body.profilePhoto || "",
-        "Skills": body.skills || "",
-        "Experiences": body.experiences || "",
-        "Soft Skills": body.softSkills || "",
-        "resumeUrl": resumeAttachment,
+    const created = await base(AIRTABLE_TABLE_ID).create([
+      {
+        fields: {
+          "Candidate Name": body.candidateName,
+          "Email address": body.email,
+          "Phone Number": body.phone,
+          "Resume URL": body.resumeUrl,
+          "Skills": body.skills,
+          "Experiences": body.experiences,
+          "Soft Skills": body.softSkills,
+          "Profile Photo": body.profilePhoto || "",
+          "Application Date": new Date().toISOString(), // Facultatif
+        },
       },
-    });
+    ]);
 
-    console.log("✅ Candidat ajouté à Airtable");
-
+    console.log("✅ Ajout réussi dans Airtable:", created[0].id);
     return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("❌ Erreur Airtable:", err);
-    return NextResponse.json({ error: String(err) }, { status: 500 });
+
+  } catch (error) {
+    console.error("❌ Airtable error:", error);
+    return NextResponse.json({ error: "Erreur Airtable" }, { status: 500 });
   }
 }

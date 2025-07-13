@@ -1,12 +1,14 @@
 'use client';
 
 import { UploadDropzone } from "@uploadthing/react";
-import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import type { OurFileRouter } from "../../../uploadthing.config";
 import { useState } from "react";
 
 export default function UploadCVWithDrop() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  console.log("🔐 Clé API Airtable:", process.env.AIRTABLE_API_KEY);
+
 
   const handleUploadComplete = async (
     res: { url: string; name: string }[] | undefined
