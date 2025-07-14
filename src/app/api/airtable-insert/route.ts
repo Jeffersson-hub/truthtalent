@@ -13,18 +13,19 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json(); // 🟢 Ceci doit venir avant tout
 
-    const created = await base(AIRTABLE_TABLE_ID).create([
+    const created = await table.create([
       {
         fields: {
           "Candidate Name": body.candidateName,
-          "Email address": body.email,
+          "Email Address": body.email,
           "Phone Number": body.phone,
-          "Resume URL": body.resumeUrl,
+          "Piece jointe": body.Piece,
           "Skills": body.skills,
           "Experiences": body.experiences,
           "Soft Skills": body.softSkills,
           "Profile Photo": body.profilePhoto || "",
-          "Application Date": new Date().toISOString(), // Facultatif
+          "Application Date": body.Date ? new Date(body.Date) : new Date(),
+          // "Application Date": new Date(), // Facultatif
         },
       },
     ]);

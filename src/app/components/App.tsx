@@ -1,14 +1,16 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import HomePage from './app/components/HomePage';
-import Dashboard from './app/components/Dashboard';
-import Header from './app/components/Header';
-import CVUpload from './app/components/CVUploader';
-import FilterPanel from './app/components/FilterPanel';
-import CandidateCard from './app/components/CandidateCard';
-import ActionPanel from './app/components/ActionPanel';
-import { Candidate, FilterCriteria } from './types';
-import { generateMockCandidates } from './utils/mockData';
-import { filterCandidates, calculateMatchScore } from './utils/filtering';
+import HomePage from './HomePage';
+import Dashboard from './Dashboard';
+import Header from './Header';
+import CVUpload from './CVUploader';
+import FilterPanel from './FilterPanel';
+import CandidateCard from './CandidateCard';
+import ActionPanel from './ActionPanel';
+import { Candidate, FilterCriteria } from '../../types';
+import { generateMockCandidates } from '../../utils/mockData';
+import { filterCandidates, calculateMatchScore } from '../../utils/filtering';
 import { FileText, Users, TrendingUp } from 'lucide-react';
 
 type CurrentPage = 'home' | 'upload' | 'profiles' | 'dashboard';
